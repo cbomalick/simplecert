@@ -15,6 +15,10 @@ require_once('classes/classes.inc.php');
 date_default_timezone_set('UTC');
 $CurrentDateTime = date("Y-m-d H:i:s");
 
+// Echo"<pre>";
+// var_dump($_SESSION);
+// Echo"</pre>";
+
 /** Authentication workflow */
 //User accesses index.php. If session is not set, header redirect to index.html
 //Upon successful log in, PHPSESSID is generated
@@ -30,43 +34,42 @@ if (!isset($_POST['username'], $_POST['password'])){
 }
 
 //Match submitted details to database
-	$session = Session::getInstance()->getSession();
-	$sql = "SELECT username,password,userid FROM accounts WHERE username = ? AND status = 'Active'";
-	$stmt = $session->connect->prepare($sql);
-	$stmt->execute([$username]);
-	
-	if (count($stmt) > 0){
-		$row = $stmt->fetch();
-		$username = $row['username'];
-		$password = $row['password'];
-		$userId = $row['userid'];
+$session = Session::getInstance()->getSession();
+$sql = "SELECT users.username,users.userid,user_auth.password FROM users
+JOIN user_auth ON users.username = user_auth.username WHERE users.username = ? AND status = 'Active'";
+$stmt = $session->connect->prepare($sql);
+$stmt->execute([$username]);
+$row = $stmt->fetch();
 
-		//If Account exists, verify password
-		if (password_verify($_POST['password'],$password)){
-			//Upon success, set values and forward user to index
-            $loggedInUser = new User($userId);
-            $_SESSION['timeZone'] = $loggedInUser->preferences['timeZone'];
-            $_SESSION['userId'] = $loggedInUser->userId;
+if (count($row) > 0){
+	$password = $row['password'] ?? NULL;
+	$userId = $row['userid'] ?? NULL;
 
-            $session->userId = $userId;
-            $session->establishedTime = $CurrentDateTime;
-            $session->createSession();
+	//If Account exists, verify password
+	if (password_verify($_POST['password'],$password)){
+		//Upon success, set values and forward user to index
+		//$session->userId = $userId;
+        $_SESSION['userId'] = $row['userid'] ?? NULL;
+		$session->establishedTime = $CurrentDateTime;
+		$session->createSession();
+		//$session->loggedInUser->expireFailures($username);
 
-            header("Location: /");
-			//AuditLog('Logged In','Desktop Login',$employeeid);
-			//$staff->unlockStaff($staffId);
-			exit();
-		} else {
-			Echo "<p style=\"text-align: center;\">Incorrect username and/or password</p>";
-			//$Username = FilterInput($_POST['email']);
-			//AuditLog('Failed Login','Incorrect Password Attempted',$Username);
-			//$staff->threeStrikes($email,"Incorrect Password Attempted");
-		}
+		header("Location: /");
+		exit();
 	} else {
-		Echo "<p style=\"text-align: center;\">Incorrect username and/or password</p>";
-			//$Username = FilterInput($_POST['email']);
-			//AuditLog('Failed Login','Incorrect Username Attempted',$Username);
-			//$staff->threeStrikes($email,"Incorrect Username Attempted");
+		// $session->loggedInUser->threeStrikes($username,"Incorrect Password Attempted");
+		// if(isset($session->loggedInUser->locked)){
+		// 	header("Location: /user/error/locked");
+		// } else {
+		// 	header("Location: /user/error/password");
+		// }
+
+		// Echo"<pre>";
+		// var_dump(get_defined_vars());
+		// Echo"</pre><br><br>";
 	}
+} else {
+	Echo "<p style=\"text-align: center;\">Incorrect username and/or password</p>";
+}
 
 ?>

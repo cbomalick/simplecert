@@ -7,7 +7,8 @@ class User {
         if(is_null($userId)){
         return;
         } else {
-            $sql = "SELECT accounts.*, userpreferences.preference, userpreferences.value FROM accounts JOIN userpreferences ON accounts.userid = userpreferences.userid WHERE accounts.userid = ?";
+            // $sql = "SELECT users.*, userpreferences.preference, userpreferences.value FROM users JOIN userpreferences ON users.userid = userpreferences.userid WHERE users.userid = ?";
+            $sql = "SELECT * FROM users WHERE users.userid = ?";
             $stmt = $this->connect->prepare($sql);
             $stmt->execute([$userId]);
             $row = $stmt->fetchAll();
@@ -15,9 +16,9 @@ class User {
             if(!empty($row)){
                 foreach($row as $row){
                     $this->userId = $row["userid"];
-                    $this->userRoles = explode(",", $row["roles"]);
-                    $this->tokens = $this->fetchTokens();
-                    $this->preferences[$row["preference"]] = $row["value"];
+                    // $this->userRoles = explode(",", $row["roles"]);
+                    // $this->tokens = $this->fetchTokens();
+                    // $this->preferences[$row["preference"]] = $row["value"];
                 }
             }
         }
@@ -52,7 +53,7 @@ class User {
 
     public function addNew(){
         //Verify email hasn't been used
-        $sql = "SELECT count(username) FROM accounts WHERE username = ?";
+        $sql = "SELECT count(username) FROM users WHERE username = ?";
         $stmt = $this->connect->prepare($sql);
         $stmt->execute([$this->emailAddress]);
         $count = $stmt->fetch();
@@ -62,7 +63,7 @@ class User {
             exit;
         } 
         
-        //Create accounts record (Username(email), password, userid, companylist, roles status, forcereset)
+        //Create users record (Username(email), password, userid, companylist, roles status, forcereset)
         $id = new IdNumber();
         $this->userId = $id->generateId("USR");
         $collapsedCompanies = '';
@@ -77,7 +78,7 @@ class User {
             $collapsedRoles .= $role . ",";
         }
 
-        $sql = "INSERT INTO accounts 
+        $sql = "INSERT INTO users 
         (username,userid,forcereset,primarycompany,companylist,roles,status,createdby,createddate) VALUES 
         (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->connect->prepare($sql);
@@ -179,14 +180,14 @@ class User {
         $stmt->execute([$email, $hashString]);
 
         //Update password
-        $sql = "UPDATE accounts set password = ?, forcereset = 'N', lastmodifiedby = ?, lastmodifieddate = ? WHERE username = ? AND status ='Active'";
+        $sql = "UPDATE users set password = ?, forcereset = 'N', lastmodifiedby = ?, lastmodifieddate = ? WHERE username = ? AND status ='Active'";
         $stmt = $this->connect->prepare($sql);
         $stmt->execute([$newPassword, $loggedInName, $CurrentDateTime, $email]);
     }
 
     public function forgotPassword($emailAddress){
         //Check if account exists
-        $sql = "SELECT count(username) FROM accounts WHERE username = ?";
+        $sql = "SELECT count(username) FROM users WHERE username = ?";
         $stmt = $this->connect->prepare($sql);
         $stmt->execute([$emailAddress]);
         $count = $stmt->fetch();
@@ -225,7 +226,7 @@ class User {
     }
 
     // public function threeStrikes($email,$reason){
-    //     //User accounts will become locked if incorrect login is attempted 3x without success
+    //     //User users will become locked if incorrect login is attempted 3x without success
     //     $CurrentDateTime = date("Y-m-d H:i:s");
     //     $ipAddress = $_SERVER['REMOTE_ADDR'];
     //     $interval = 30;
@@ -261,7 +262,7 @@ class User {
 
     //     //TODO: if ($employee->isValid($loggedInEmployee)){ execute } else { error }
     //     //Revoke account access
-    //     $sql = "UPDATE accounts SET status = 'Locked' WHERE staffid = ?";
+    //     $sql = "UPDATE users SET status = 'Locked' WHERE staffid = ?";
     //     $stmt = $this->connect->prepare($sql);
     //     $stmt->execute([$staffId]);
 
@@ -275,7 +276,7 @@ class User {
 
     //     //TODO: if ($employee->isValid($loggedInEmployee)){ execute } else { error }
     //     //Give back account access
-    //     $sql = "UPDATE accounts SET status = 'Active' WHERE staffid = ?";
+    //     $sql = "UPDATE users SET status = 'Active' WHERE staffid = ?";
     //     $stmt = $this->connect->prepare($sql);
     //     $stmt->execute([$staffId]);
 
@@ -299,7 +300,7 @@ class User {
     //     $stmt->execute([$CurrentDateTime, $loggedInEmployee, $staffId]);
 
     //     //Revoke account access
-    //     $sql = "UPDATE accounts SET status = 'InActive', lastmodifieddate = ?, lastmodifiedby = ? WHERE staffid = ?";
+    //     $sql = "UPDATE users SET status = 'InActive', lastmodifieddate = ?, lastmodifiedby = ? WHERE staffid = ?";
     //     $stmt = $this->connect->prepare($sql);
     //     $stmt->execute([$CurrentDateTime, $loggedInEmployee, $staffId]);
     // }

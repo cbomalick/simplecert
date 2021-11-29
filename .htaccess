@@ -1,0 +1,42 @@
+# The following disables the display of a file
+# index of a folder if there is no index found
+# such as index.html, index.php, etc...
+
+Options -Indexes
+
+# If you wish to change a PHP Setting you need
+# to do it here and it will affect the folder
+# that this file is located in as well as all
+# sub-folders unless the sub-folder has it's
+# own .htaccess
+#
+# As an example to turn the PHP Setting
+# "magic_quotes_gpc" on you would uncomment
+# the following line:
+# php_flag magic_quotes_gpc on
+#
+# To set a value that is not on/off you need
+# to use the php_value setting in the following
+# format:
+# php_value setting_to_change = value
+#
+# If you have any questions please contact
+# support at support@mddhosting.com
+
+#Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+## Rewrite arguments into more friendly format ##
+RewriteEngine On
+
+#Exclude css and js folders from this rule
+RewriteRule ^(css|js)($|/) - [L]
+
+#Drop .php and parameter strings from URL
+RewriteRule ^([a-zA-Z0-9-]+)/?$ index.php?page=$1 [L]
+RewriteRule ^([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/?$ index.php?page=$1&action=$2 [L]
+RewriteRule ^([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/([a-zA-Z0-9-]+)/?$ index.php?page=$1&action=$2&id=$3 [L]
+
+ErrorDocument 404 /index.html
+#Redirect to index file upon error

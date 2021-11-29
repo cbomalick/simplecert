@@ -11,11 +11,13 @@ class Session {
     protected function __construct(){
         $this->connect = Database::getInstance()->getConnection();
         
+        //Session confirmation variables
         $this->sessionId = session_id();
-        $this->userId = $_SESSION['userId'] ?? NULL;
         $this->establishedTime = $_SESSION['establishedTime'] ?? NULL;
         $this->ipAddress = $_SERVER['REMOTE_ADDR'];
         
+        //Generate user to access permissions and additional details
+        $this->userId = $_SESSION['userId'] ?? NULL;
         $this->loggedInUser = new User($this->userId) ?? "Error - Not Found";
         
         return $this;

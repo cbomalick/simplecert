@@ -9,7 +9,7 @@ date_default_timezone_set('UTC');
 $CurrentDateTime = date("Y-m-d H:i:s");
 
 //Import classes
-require_once('classes/packages.inc.php');
+require_once('classes/classes.inc.php');
 require_once('layout/global/global.session.inc.php'); 
 
 // Echo"<pre>";
