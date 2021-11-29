@@ -3,11 +3,8 @@
 class TimeHandler {
 
     public function __construct($timePreference){
-
         $this->timeZone = $timePreference;
-
     }
-
 
     public function displayUserDate($inputTime){
         //Accept input in UTC and output in user's timezone

@@ -8,16 +8,15 @@ require_once('table.class.php');
 require_once('site.class.php');
 
 /* Company */
-require_once('entity.class.php');
 require_once('company.class.php');
 
 /* Communication (Email, Phone, Fax) */
-require_once('communication.class.php');
-require_once('email.class.php');
-require_once('phone.class.php');
+//require_once('communication.class.php');
+//require_once('email.class.php');
+//require_once('phone.class.php');
 
 /* Person (Prospect, Customer, Employee) */
-require_once('person.class.php');
+//require_once('person.class.php');
 
 /* User */
 require_once('user.class.php');
