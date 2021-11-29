@@ -1,5 +1,5 @@
 <div id="footer" class="footer">
-	<p>&copy; Copyright 2020 <a href="https://pool-manager.com">Trident Pool Manager</a> | All rights reserved</p>
+	<p>&copy; Copyright 2022 <a href="https://scrillas.com">Bomalick Web Development</a> | All rights reserved</p>
 </div>
 <script>
     $('.expand-search').click(function(){

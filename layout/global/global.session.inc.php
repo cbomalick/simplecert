@@ -6,7 +6,6 @@ $session = Session::getInstance()->getSession();
 
 //Exempt pages from login requirement
 $exempted = ["reset", "verify", "resetsub", "verifysub", "wiki"];
-
 if(!in_array(htmlspecialchars($_GET['action'] ?? ""), $exempted)){
     //Check if session cookie is set
     if (isset($session->sessionId)) {
@@ -24,8 +23,7 @@ if(!in_array(htmlspecialchars($_GET['action'] ?? ""), $exempted)){
     }
 }
 
-$loggedInUser = $session->loggedInUser;
-$timeHandler = new TimeHandler($loggedInUser->preferences['timeZone'] ?? 'America/Chicago');
-$_SESSION['timeZone'] = $loggedInUser->preferences['timeZone'] ?? 'America/Chicago';
+//Set timezone from user preferences
+$_SESSION['timeZone'] = $session->loggedInUser->preferences['timeZone'] ?? 'America/Chicago';
 
 ?>

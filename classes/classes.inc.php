@@ -11,7 +11,6 @@ require_once('site.class.php');
 require_once('company.class.php');
 
 /* Communication (Email, Phone, Fax) */
-//require_once('communication.class.php');
 //require_once('email.class.php');
 //require_once('phone.class.php');
 

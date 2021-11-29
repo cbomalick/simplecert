@@ -15,8 +15,8 @@ class Session {
         $this->userId = $_SESSION['userId'] ?? NULL;
         $this->establishedTime = $_SESSION['establishedTime'] ?? NULL;
         $this->ipAddress = $_SERVER['REMOTE_ADDR'];
+        
         $this->loggedInUser = new User($this->userId) ?? "Error - Not Found";
-        $this->loggedInUser->personId = $this->userId;
         
         return $this;
     }

@@ -1,16 +1,16 @@
 <?php
 session_start([
-    //'cookie_lifetime' => 30,
-    //'read_and_close'  => true,
-    'cookie_httponly'  => 1,
-    'cookie_secure'  => 1,
+    //'cookie_lifetime' => 30, //lifetime of the cookie in seconds which is sent to the browser. Default is until browser is closed
+    //'read_and_close'  => true, //will result in the session being closed immediately after being read, avoiding locking if the session data won't be changed
+    'cookie_httponly'  => 1, //cookie accessible only through the HTTP protocol. cookie won't be accessible by scripting languages such as JavaScript
+    'cookie_secure'  => 1, //cookies should only be sent over secure connections
 ]);
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 //Import classes
-require_once('classes/packages.inc.php');
+require_once('classes/classes.inc.php');
 
 date_default_timezone_set('UTC');
 $CurrentDateTime = date("Y-m-d H:i:s");
