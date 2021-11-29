@@ -8,11 +8,29 @@ Echo"
 <div class=\"boxwrapper\">";
 
         // if($loggedInUser->validatePermissions("ServiceView")){
-            Echo"<div class=\"box half\">
+            Echo"<div class=\"box mediumbox\">
             <div class=\"boxheader\">
-                <h2>Recent Services</h2>
+                <h2>Site Details</h2>
             </div>
-            <div class=\"boxcontent table\">";
+                <div class=\"boxcontent\">";
+                
+                $site = new Site();
+                Echo"<pre>";
+                var_dump($site);
+                Echo"</pre>";
+
+                Echo"</div>
+            </div>";
+
+            Echo"<div class=\"box mediumbox\">
+            <div class=\"boxheader\">
+                <h2>Current User</h2>
+            </div>
+            <div class=\"boxcontent\">";
+
+            Echo"<pre>";
+            var_dump($session->loggedInUser);
+            Echo"</pre>";
 
             //$dashboard->printRecentRecords("Service", $loggedInUser->allowedCompanies);
                 Echo"</div>
@@ -20,21 +38,7 @@ Echo"
 
         // }
 
-        Echo"<div class=\"box mediumbox\">
-            <div class=\"boxheader\">
-                <h2>Recent Services</h2>
-            </div>
-            <div class=\"boxcontent table\">
-                <p>";
-                    
-                // Echo"Time in UTC<br>";
-                // Echo $CurrentDateTime . "<br><br>";
-
-                // Echo"Time in {$session->loggedInUser->preferences["timeZone"]} <br>";
-                // $timeHandler = new TimeHandler($session->loggedInUser->preferences["timeZone"]);
-                // Echo $timeHandler->displayUserDateTime($CurrentDateTime);
-
-                Echo"</p>
+            Echo"</p>
             </div>
             </div>";
             

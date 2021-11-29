@@ -14,7 +14,7 @@ if(!in_array(htmlspecialchars($_GET['action'] ?? ""), $exempted)){
         if($session->validateSession() != TRUE){  
             session_destroy();
             setcookie('PHPSESSID', '', time() - 3600, '/');
-            //header('Location: /');
+            header('Location: /');
         }
     } else {
         session_destroy();

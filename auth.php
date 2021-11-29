@@ -48,8 +48,7 @@ if (count($row) > 0){
 	//If Account exists, verify password
 	if (password_verify($_POST['password'],$password)){
 		//Upon success, set values and forward user to index
-		//$session->userId = $userId;
-        $_SESSION['userId'] = $row['userid'] ?? NULL;
+		$session->userId = $_SESSION['userId'];
 		$session->establishedTime = $CurrentDateTime;
 		$session->createSession();
 		//$session->loggedInUser->expireFailures($username);
