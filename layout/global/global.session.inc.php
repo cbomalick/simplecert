@@ -14,12 +14,12 @@ if(!in_array(htmlspecialchars($_GET['action'] ?? ""), $exempted)){
         if($session->validateSession() != TRUE){  
             session_destroy();
             setcookie('PHPSESSID', '', time() - 3600, '/');
-            header('Location: /');
+            header('Location: /login.html');
         }
     } else {
         session_destroy();
         setcookie('PHPSESSID', '', time() - 3600, '/');
-        header('Location: /');
+        header('Location: /login.html');
         exit;
     }
 }

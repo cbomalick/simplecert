@@ -36,6 +36,20 @@ Echo"
                 Echo"</div>
             </div>";
 
+            Echo"<div class=\"box mediumbox\">
+            <div class=\"boxheader\">
+                <h2>Session Details</h2>
+            </div>
+                <div class=\"boxcontent\">";
+                
+                $site = new Site();
+                Echo"<pre>";
+                var_dump($_SESSION);
+                Echo"</pre>";
+
+                Echo"</div>
+            </div>";
+
         // }
 
             Echo"</p>

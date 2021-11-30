@@ -53,10 +53,8 @@ class Session {
     }
 
     public function createSession(){
+        $_SESSION['userId'] = $this->userId;
 
-        Echo"<pre>";
-var_dump($this);
-Echo"</pre>";
         //Upon login, add session to database
         $sql = "INSERT INTO session 
         (sessionid,userid,establishedtime,ipaddress) VALUES 

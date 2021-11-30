@@ -1,7 +1,7 @@
 /* General Settings */
 html, body {
 	height: 100%;
-	background: #004B8D;
+	background: #257357;
 	font-family: "Open Sans", sans-serif;
 	font-size: 14px;
 	padding: 0;
@@ -108,13 +108,13 @@ form {
 	cursor: pointer;
 	font-size: 14px;
 	color: #FFFFFF;
-	background-color: #098BEF;
+	background-color: #448C73;
 	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
 	border-bottom: 3px solid rgba(0, 0, 0, 0.1);
 	font-weight: bold;
 }
 .button:hover{
-	background-color: #0876C9;
+	background-color: #105D42;
 	box-shadow: 0 1px 8px rgba(0, 0, 0, 0.3);
 }
 .button:disabled {
@@ -337,7 +337,7 @@ form {
 }
 /*Navigation bar*/
 .logo {
-	background: no-repeat center/214px 50px url("../images/logo.png");
+	background: no-repeat center/214px 50px url("images/logo.png");
 	width: 214px;
 	height: 50px;
 	position: absolute;
@@ -356,7 +356,7 @@ form {
 	width: 100%;
 	margin-top: 0;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-	background-color: #004B8D;
+	background-color: #257357;
 }
 .navigationbar a {
 	text-decoration: none;
@@ -380,7 +380,7 @@ form {
 }
 .navigationbar ul li:hover {
 	cursor: pointer;
-	background-color: #00305A;
+	background-color: #105D42;
 }
 .navigationbar ul li:hover ul {
 	display: block;
@@ -403,7 +403,7 @@ form {
 	border-radius: 3px;
 }
 .navigationbar ul li:hover ul li:hover {
-	background-color: #00305A;
+	background-color: #105D42;
 }
 .navigationbar ul li:hover ul li:hover span {
 	background-color: #e63950;
@@ -484,11 +484,11 @@ form {
 	height: 45px;
 }
 .clickable {
-	color: #098BEF;
+	color: #448C73;
 	font-weight: bold;
 }
 .clickable:hover {
-	color: #004B8D;
+	color: #105D42;
 	border-bottom: 0;
 }
 .text-left {
