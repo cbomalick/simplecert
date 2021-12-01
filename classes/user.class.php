@@ -7,8 +7,7 @@ class User {
         if(is_null($userId)){
         return;
         } else {
-            // $sql = "SELECT users.*, userpreferences.preference, userpreferences.value FROM users JOIN userpreferences ON users.userid = userpreferences.userid WHERE users.userid = ?";
-            $sql = "SELECT * FROM users WHERE users.userid = ?";
+            $sql = "SELECT users.*, user_preferences.preference, user_preferences.value FROM users JOIN user_preferences ON users.userid = user_preferences.userid WHERE users.userid = ?";
             $stmt = $this->connect->prepare($sql);
             $stmt->execute([$userId]);
             $row = $stmt->fetchAll();
@@ -16,9 +15,9 @@ class User {
             if(!empty($row)){
                 foreach($row as $row){
                     $this->userId = $row["userid"];
-                    // $this->userRoles = explode(",", $row["roles"]);
+                    $this->userRoles = explode(",", $row["roles"]);
                     // $this->tokens = $this->fetchTokens();
-                    // $this->preferences[$row["preference"]] = $row["value"];
+                    $this->preferences[$row["preference"]] = $row["value"];
                 }
             }
         }
@@ -36,7 +35,7 @@ class User {
     private function fetchTokens(){
         $in  = str_repeat('?,', count($this->userRoles) - 1) . '?';
 
-        $sql = "SELECT tokens FROM userroles WHERE role IN ($in) AND status = 'Active'";
+        $sql = "SELECT tokens FROM user_roles WHERE role IN ($in) AND status = 'Active'";
         $stmt = $this->connect->prepare($sql);
         $stmt->execute($this->userRoles);
         $row = $stmt->fetchAll();

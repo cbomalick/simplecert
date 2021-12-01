@@ -337,7 +337,7 @@ form {
 }
 /*Navigation bar*/
 .logo {
-	background: no-repeat center/214px 50px url("images/logo.png");
+	background: no-repeat center/214px 50px url("../images/logo.png");
 	width: 214px;
 	height: 50px;
 	position: absolute;

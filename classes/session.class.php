@@ -53,6 +53,7 @@ class Session {
     }
 
     public function createSession(){
+        //Store userId in the server session, used during pageload validation
         $_SESSION['userId'] = $this->userId;
 
         //Upon login, add session to database

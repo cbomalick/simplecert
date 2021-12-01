@@ -7,9 +7,7 @@
     </div>
     <div class="navigation">
         <ul>
-            <?php
-            $customerLinks = '';
-            
+            <?php            
             //Dashboard
             //All users have access, used as initial landing page
             Echo"<li><a href=\"/\">Dashboard</a></li>";

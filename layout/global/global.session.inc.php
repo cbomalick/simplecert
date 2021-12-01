@@ -8,7 +8,6 @@ $session = Session::getInstance()->getSession();
 $exempted = ["reset", "verify", "resetsub", "verifysub", "wiki"];
 if(!in_array(htmlspecialchars($_GET['action'] ?? ""), $exempted)){
     //Check if session cookie is set
-
     if (isset($session->sessionId)) {
         //Validate user's session. If invalid, flush and redirect to login page
         if($session->validateSession() != TRUE){  
