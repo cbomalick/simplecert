@@ -7,10 +7,52 @@
     </div>
     <div class="navigation">
         <ul>
-            <?php            
-            //Dashboard
+            <?php
+            //Dashboard module
             //All users have access, used as initial landing page
             Echo"<li><a href=\"/\">Dashboard</a></li>";
+
+            //Build Customers module
+            $customerLinks = ''; //Begin with empty menu and append screens the user has permissions for
+            $displayCustomerModule = FALSE; //Hide module by default
+            if($session->loggedInUser->validatePermissions("CustomerView")){
+                $customerLinks .= "<li><a href=\"/customer\">Customers</a></li>";
+                $displayCustomerModule = TRUE;
+            }
+
+                //Print Customers module
+                if($displayCustomerModule){
+                    Echo"<li>Customer
+                            <ul>
+                                {$customerLinks}
+                            </ul>
+                        </li>";
+                }
+
+            //Build Billing module
+            $billingLinks = ''; //Begin with empty menu and append screens the user has permissions for
+            $displayBillingModule = FALSE; //Hide module by default
+            if($session->loggedInUser->validatePermissions("BillingView")){
+                $billingLinks .= "<li><a href=\"/aging\">Bill Aging</a></li>";
+                $displayBillingModule = TRUE;
+            }
+            if($session->loggedInUser->validatePermissions("BillingView")){
+                $billingLinks .= "<li><a href=\"/viewbills\">View Bills</a></li>";
+                $displayBillingModule = TRUE;
+            }
+            if($session->loggedInUser->validatePermissions("BillingView")){
+                $billingLinks .= "<li><a href=\"/genbills\">Generate Bills</a></li>";
+                $displayBillingModule = TRUE;
+            }
+
+                //Print Billing module
+                if($displayBillingModule){
+                    Echo"<li>Billing
+                            <ul>
+                                {$billingLinks}
+                            </ul>
+                        </li>";
+                }
 
             ?>
         </ul>
@@ -22,7 +64,7 @@
             Echo"<a class=\"navbaritem navbarbutton\" href=\"\">Employees</a>";
 
             Echo"<h3>Account Settings</h3>";
-            Echo"<a class=\"navbaritem navbarbutton\" href=\"preferences.php\">Preferences</a>";
+            Echo"<a class=\"navbaritem navbarbutton\" href=\"user/preferences\">Preferences</a>";
             Echo"<a class=\"navbaritem navbarbutton\" href=\"logout.php\">Log Out</a>";
         ?>
     </div>

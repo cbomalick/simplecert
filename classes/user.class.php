@@ -16,7 +16,7 @@ class User {
                 foreach($row as $row){
                     $this->userId = $row["userid"];
                     $this->userRoles = explode(",", $row["roles"]);
-                    // $this->tokens = $this->fetchTokens();
+                    $this->tokens = $this->fetchTokens();
                     $this->preferences[$row["preference"]] = $row["value"];
                 }
             }
@@ -34,7 +34,6 @@ class User {
 
     private function fetchTokens(){
         $in  = str_repeat('?,', count($this->userRoles) - 1) . '?';
-
         $sql = "SELECT tokens FROM user_roles WHERE role IN ($in) AND status = 'Active'";
         $stmt = $this->connect->prepare($sql);
         $stmt->execute($this->userRoles);
@@ -323,6 +322,20 @@ class User {
     //     }
 
     // }
+
+    public function updatePreferences(){
+        //Package all update methods into this carrier method
+        //Allows for expansion of preferences options later
+        $this->updateTimeZone();
+        //$audit = new AuditLog("Update", "User Preferences", "Updated User Preferences");
+    }
+
+    private function updateTimeZone(){
+        $sql = "UPDATE user_preferences SET value = ? WHERE preference = 'timeZone' AND userid = ? AND status = 'Active'";
+
+        $stmt = $this->connect->prepare($sql);
+        $stmt->execute([$this->preferences["timeZone"], $this->userId]);
+    }
 
 }
 

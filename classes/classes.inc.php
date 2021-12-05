@@ -2,11 +2,12 @@
 
 //Import classes
 
-/* Utilities */
+/* System */
 require_once('database.class.php');
 require_once('table.class.php');
 require_once('site.class.php');
 require_once('alert.class.php');
+require_once('lov.class.php');
 
 /* Company */
 require_once('company.class.php');
