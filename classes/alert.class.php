@@ -48,14 +48,16 @@ class Alert{
             //TODO: Log error if invalid color given
         }
 
-        Echo"<div class=\"box alertbox center {$styles}\">
+        Echo"<div class=\"boxwrapper\">
+        <div class=\"box alertbox center {$styles}\">
                 <div class=\"alerticon\">
                     <img src=\"images/exclamation.png\" />
                 </div>
                 <div class=\"boxcontent\">
                     <p><b>{$this->subject}: </b>{$this->body}</p>
                 </div>
-            </div>";
+            </div>
+        </div>";
     }
 }
 

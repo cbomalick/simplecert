@@ -41,12 +41,10 @@ if (isset($_GET['action'])) {
 		<meta http-equiv="Content-Type" />
         <title>simpleCert</title>
         <base href="/" />
-        
         <?php require_once('layout/global/global.scripts.inc.php'); ?>
 	</head>
 	<body>
         <?php require_once('layout/global/navigation.inc.php'); ?>
-
         <div class="panel">
             <div class="content">
                 <?php

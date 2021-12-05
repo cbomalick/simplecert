@@ -1,14 +1,17 @@
 <?php
 
-//$dashboard = new Dashboard();
+$dashboard = new Dashboard();
 
-Echo"<h2>Dashboard</h2>";
+Echo"<h2>Dashboard</h2>"; //Must be a separate echo from the one below otherwise header will be below alert box. Side effect of engine's nonlinear processing
+Echo"<div class=\"alerts\">
+{$dashboard->displayActiveAlerts()}
+</div>";
 
 Echo"
 <div class=\"boxwrapper\">";
 
         // if($loggedInUser->validatePermissions("ServiceView")){
-            Echo"<div class=\"box mediumbox\">
+            Echo"<div class=\"box largebox\">
             <div class=\"boxheader\">
                 <h2>Site Details</h2>
             </div>
@@ -22,7 +25,7 @@ Echo"
                 Echo"</div>
             </div>";
 
-            Echo"<div class=\"box mediumbox\">
+            Echo"<div class=\"box largebox\">
             <div class=\"boxheader\">
                 <h2>Current User</h2>
             </div>
@@ -36,7 +39,7 @@ Echo"
                 Echo"</div>
             </div>";
 
-            Echo"<div class=\"box mediumbox\">
+            Echo"<div class=\"box largebox\">
             <div class=\"boxheader\">
                 <h2>Session Details</h2>
             </div>
