@@ -35,8 +35,8 @@ if (isset($_GET['action'])) {
 	$action = "";
 }
 
-$timeHandler = new TimeHandler($session->loggedInUser->preferences["timeZone"] ?? $this->session->site->defaultTimeZone);
 $site = new Site();
+$timeHandler = new TimeHandler($session->loggedInUser->preferences["timeZone"] ?? $site->timeZone);
 $audit = new AuditLog("Page View", "Index", "Loaded Page");
 ?>
 

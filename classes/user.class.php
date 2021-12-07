@@ -154,20 +154,20 @@ class User {
 
     public function passwordVerify($key){
         $hashString = md5($key);
-        $sql = "SELECT COUNT(seqno) FROM password_change_requests WHERE status != 'Used' AND hashstring = ? AND time >= now() - INTERVAL 1 DAY";
+        $sql = "SELECT COUNT(seqno),email FROM password_change_requests WHERE status != 'Used' AND hashstring = ? AND time >= now() - INTERVAL 1 DAY";
         $stmt = $this->connect->prepare($sql);
         $stmt->execute([$hashString]);
         $row = $stmt->fetch();
 
-        $sql = "";
         if($row['COUNT(seqno)'] >= 1){
+            $this->email = $row['email'];
             return true;
         } else {
             return false;
         }
     }
 
-    public function updatePassword($email,$key,$password,$loggedInName){
+    public function updatePassword($email,$key,$password){
         $newPassword = password_hash($password, PASSWORD_DEFAULT);
         $hashString = md5($key);
         $CurrentDateTime = date("Y-m-d H:i:s");
@@ -178,9 +178,9 @@ class User {
         $stmt->execute([$email, $hashString]);
 
         //Update password
-        $sql = "UPDATE users set password = ?, forcereset = 'N', lastmodifiedby = ?, lastmodifieddate = ? WHERE username = ? AND status ='Active'";
+        $sql = "UPDATE user_auth set password = ?, setdate = ? WHERE username = ?";
         $stmt = $this->connect->prepare($sql);
-        $stmt->execute([$newPassword, $loggedInName, $CurrentDateTime, $email]);
+        $stmt->execute([$newPassword, $CurrentDateTime, $email]);
     }
 
     public function forgotPassword($emailAddress){

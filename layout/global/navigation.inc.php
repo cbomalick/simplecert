@@ -8,17 +8,18 @@
     <div class="navigation">
         <ul>
             <?php
-            //Dashboard module
-            //All users have access, used as initial landing page
-            Echo"<li><a href=\"/\">Dashboard</a></li>";
+            if(!isset($session->loggedInUser)){
+                //Dashboard module
+                //All users have access, used as initial landing page
+                Echo"<li><a href=\"/\">Dashboard</a></li>";
 
-            //Build Customers module
-            $customerLinks = ''; //Begin with empty menu and append screens the user has permissions for
-            $displayCustomerModule = FALSE; //Hide module by default
-            if($session->loggedInUser->validatePermissions("CustomerView")){
-                $customerLinks .= "<li><a href=\"/customer\">Customers</a></li>";
-                $displayCustomerModule = TRUE;
-            }
+                //Build Customers module
+                $customerLinks = ''; //Begin with empty menu and append screens the user has permissions for
+                $displayCustomerModule = FALSE; //Hide module by default
+                if($session->loggedInUser->validatePermissions("CustomerView")){
+                    $customerLinks .= "<li><a href=\"/customer\">Customers</a></li>";
+                    $displayCustomerModule = TRUE;
+                }
 
                 //Print Customers module
                 if($displayCustomerModule){
@@ -29,21 +30,21 @@
                         </li>";
                 }
 
-            //Build Billing module
-            $billingLinks = ''; //Begin with empty menu and append screens the user has permissions for
-            $displayBillingModule = FALSE; //Hide module by default
-            if($session->loggedInUser->validatePermissions("BillingView")){
-                $billingLinks .= "<li><a href=\"/aging\">Bill Aging</a></li>";
-                $displayBillingModule = TRUE;
-            }
-            if($session->loggedInUser->validatePermissions("BillingView")){
-                $billingLinks .= "<li><a href=\"/viewbills\">View Bills</a></li>";
-                $displayBillingModule = TRUE;
-            }
-            if($session->loggedInUser->validatePermissions("BillingView")){
-                $billingLinks .= "<li><a href=\"/genbills\">Generate Bills</a></li>";
-                $displayBillingModule = TRUE;
-            }
+                //Build Billing module
+                $billingLinks = ''; //Begin with empty menu and append screens the user has permissions for
+                $displayBillingModule = FALSE; //Hide module by default
+                if($session->loggedInUser->validatePermissions("BillingView")){
+                    $billingLinks .= "<li><a href=\"/aging\">Bill Aging</a></li>";
+                    $displayBillingModule = TRUE;
+                }
+                if($session->loggedInUser->validatePermissions("BillingView")){
+                    $billingLinks .= "<li><a href=\"/viewbills\">View Bills</a></li>";
+                    $displayBillingModule = TRUE;
+                }
+                if($session->loggedInUser->validatePermissions("BillingView")){
+                    $billingLinks .= "<li><a href=\"/genbills\">Generate Bills</a></li>";
+                    $displayBillingModule = TRUE;
+                }
 
                 //Print Billing module
                 if($displayBillingModule){
@@ -54,6 +55,11 @@
                         </li>";
                 }
 
+            } else {
+                Echo"<li>&nbsp;</li>";
+            }
+            
+            
             ?>
         </ul>
     </div>

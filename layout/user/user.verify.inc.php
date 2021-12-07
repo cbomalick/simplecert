@@ -11,7 +11,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 // var_dump($_GET);
 // Echo"</pre>";
 
-$lov = new LOV();
+$lov = LOV::getInstance()->getLOV();
 
 //Generate javascript warnings for required fields
 $requiredFields = [
@@ -21,7 +21,7 @@ $requiredFields = [
 ];
 $lov->requiredFields($requiredFields);
 
-$user = new User("NEW");
+$user = new User();
 if($user->passwordVerify($verificationKey)){
     Echo "<h2>Update Password</h2>
     <div class=\"boxwrapper\">
