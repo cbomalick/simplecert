@@ -5,7 +5,6 @@ class Alert{
     public function __construct($alertId = NULL){
         $this->connect = Database::getInstance()->getConnection();
 
-        //If alertId is provided, display alert. If no ID is provided, display all currently active alerts (for example on a dashboard)
         if(is_null($alertId)){
             return;
         } else {
@@ -23,16 +22,26 @@ class Alert{
                     $this->startDate = $row["startdate"];
                     $this->endDate = $row["enddate"];
                     $this->status = $row["status"];
-                    $this->createdBy = $row['createdby'];
-                    $this->createdDate = $row['createddate'];
                     //$this->badge = "<span class=\"badge white-text {$this->color}\">{$this->subject}</span>";
                 }
             }
         }
     }
 
-    //TODO: Instead of if/else, make this->color the array key and match value
+    public function permissionError(){
+        //Record that an invalid attempt occurred
+        $audit = new AuditLog("Error", "Validate Permissions", "Attempted to access restricted page or feature");
+
+        //Display an error message for the user
+        $this->alertId = "permissionError";
+        $this->color = "Error";
+        $this->subject = "Error";
+        $this->body = "Your account does not have permission to access this page or feature. Please contact your system administrator for further assistance.";
+        $this->display();
+    }
+
     public function display(){
+        //CSS class names often match the description, but might not always follow that rule
         if($this->color == "Info"){
             $styles = "info";
         } else if($this->color == "Error"){
@@ -45,7 +54,8 @@ class Alert{
             $styles = "system";
         } else {
             $styles = "info";
-            //TODO: Log error if invalid color given
+            //Default to Info colors, but log it for further review since this shouldn't be possible
+            $audit = new AuditLog("Error", "Invalid Alert Color", "Alert color '{$this->color}' provided for {$this->alertId}");
         }
 
         Echo"<div class=\"boxwrapper\">

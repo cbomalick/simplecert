@@ -3,7 +3,7 @@
         <!-- Display logo -->
     </div>
     <div class="user">
-        <img src="images/photo.jpg" onclick="openNav()"/>
+        <img src="images/photo.jpg" onclick="openNav()" alt="<?php Echo"{$site->siteName} Logo"; ?>"/>
     </div>
     <div class="navigation">
         <ul>
@@ -59,13 +59,17 @@
     </div>
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <?php           
-            Echo"<h3>Favorites</h3>";
-            Echo"<a class=\"navbaritem navbarbutton\" href=\"\">Employees</a>";
+        <?php  
+            if(isset($_SESSION['userId'])){
+                Echo"<h3>Favorites</h3>";
+                Echo"<a class=\"navbaritem navbarbutton\" href=\"\">Employees</a>";
 
-            Echo"<h3>Account Settings</h3>";
-            Echo"<a class=\"navbaritem navbarbutton\" href=\"user/preferences\">Preferences</a>";
-            Echo"<a class=\"navbaritem navbarbutton\" href=\"logout.php\">Log Out</a>";
+                Echo"<h3>Account Settings</h3>";
+                Echo"<a class=\"navbaritem navbarbutton\" href=\"user/preferences\">Preferences</a>";
+                Echo"<a class=\"navbaritem navbarbutton\" href=\"logout.php\">Log Out</a>";
+            } else {
+                Echo"<h3>Not Logged In</h3>";
+            }
         ?>
     </div>
 

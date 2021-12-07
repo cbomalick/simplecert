@@ -14,7 +14,7 @@ Echo "<h2>User Preferences</h2>
             <p class=\"text-left\">
                 Change your profile and account information
             </p>
-        <form method=\"post\" action=\"user\\prefsub\">
+        <form method=\"post\" action=\"user/prefsub\">
             <p class=\"header\">Time Zone</p>
                 <p class=\"text-left\">";
                 $lov->generateTimeZoneDropdown($session->loggedInUser->preferences['timeZone']);

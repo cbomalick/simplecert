@@ -41,7 +41,12 @@ $stmt = $session->connect->prepare($sql);
 $stmt->execute([$username]);
 $row = $stmt->fetch();
 
-if (count($row) > 0){
+// Echo"<pre>";
+// var_dump($stmt->rowCount());
+// Echo"</pre>";
+
+//Check if account exists
+if($stmt->rowCount() > 0){
 	$password = $row['password'] ?? NULL;
 	$userId = $row['userid'] ?? NULL;
 
@@ -50,13 +55,18 @@ if (count($row) > 0){
 		//Upon success, set values and forward user to index
 		$session->userId = $userId;
 		$session->establishedTime = $CurrentDateTime;
-        $_SESSION['establishedTime'] = $CurrentDateTime;
+		$_SESSION['establishedTime'] = $CurrentDateTime;
+		$_SESSION['sessionId'] = session_id();
+		$_SESSION['ipAddress'] = $_SERVER['REMOTE_ADDR'];
 		$session->createSession();
+		$audit = new AuditLog("Logged In", "Login", "Logged In");
 		//$session->loggedInUser->expireFailures($username);
 
 		header("Location: /");
 		exit();
 	} else {
+		Echo"Incorrect password";
+		$audit = new AuditLog("Error", "Login", "Incorrect Password Attempted ({$_POST['password']})");
 		// $session->loggedInUser->threeStrikes($username,"Incorrect Password Attempted");
 		// if(isset($session->loggedInUser->locked)){
 		// 	header("Location: /user/error/locked");
@@ -69,7 +79,9 @@ if (count($row) > 0){
 		// Echo"</pre><br><br>";
 	}
 } else {
-	Echo "<p style=\"text-align: center;\">Incorrect username and/or password</p>";
+	Echo "Incorrect username";
+	$audit = new AuditLog("Error", "Login", "Incorrect Username Attempted ({$username})");
 }
+
 
 ?>

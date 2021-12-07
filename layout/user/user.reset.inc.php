@@ -4,9 +4,8 @@ if(empty($loggedInName)){
     $loggedInName = "Not logged in";
 }
 
-
 //Generate javascript warnings for required fields
-$lov = new LOV();
+$lov = LOV::getInstance()->getLOV();
 $requiredFields = [
     "emailAddress" => "Enter Email Address"
 ];

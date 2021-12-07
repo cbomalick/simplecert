@@ -1,5 +1,8 @@
 <?php
 
+    /** To use within a class: */
+    /** $lov = LOV::getInstance()->getLOV(); */
+
 class LOV {
 
     protected static $_instance;
@@ -7,7 +10,7 @@ class LOV {
     protected function __construct(){
         $this->connect = Database::getInstance()->getConnection();
         $this->session = Session::getInstance()->getSession();
-        $this->timeHandler = new TimeHandler($this->session->loggedInUser->preferences["timeZone"] ?? $this->session->site->defaultTimeZone);
+        //$this->timeHandler = new TimeHandler($this->session->loggedInUser->preferences["timeZone"] ?? $this->session->site->defaultTimeZone);
 
         return $this;
     }

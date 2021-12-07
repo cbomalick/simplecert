@@ -8,6 +8,9 @@ require_once('table.class.php');
 require_once('site.class.php');
 require_once('alert.class.php');
 require_once('lov.class.php');
+require_once('auditlog.class.php');
+require_once('idnumber.class.php');
+require_once('timehandler.class.php');
 
 /* Company */
 require_once('company.class.php');

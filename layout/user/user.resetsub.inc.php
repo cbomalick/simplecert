@@ -1,5 +1,5 @@
 <?php
-    $user = new User("NEW");
+    $user = new User();
     $emailAddress = $_POST['emailAddress'];
     if(empty($loggedInName)){
         $loggedInName = "Not logged in";

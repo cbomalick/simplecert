@@ -35,11 +35,15 @@ if (isset($_GET['action'])) {
 	$action = "";
 }
 
+$timeHandler = new TimeHandler($session->loggedInUser->preferences["timeZone"] ?? $this->session->site->defaultTimeZone);
+$site = new Site();
+$audit = new AuditLog("Page View", "Index", "Loaded Page");
 ?>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 	<head>
-		<meta http-equiv="Content-Type" />
-        <title>simpleCert</title>
+        <title><?php Echo"{$site->siteName}"; ?></title>
         <base href="/" />
         <?php require_once('layout/global/global.scripts.inc.php'); ?>
 	</head>
@@ -55,10 +59,16 @@ if (isset($_GET['action'])) {
                     require_once('layout/dashboard/index.inc.php');
                 break;
 
-                /*System */
+                /*System*/
                 case"user":
                     require_once('layout/user/index.inc.php');
                 break;
+
+                /*Customer*/
+                case"customer":
+                    require_once('layout/customer/index.inc.php');
+                break;
+
                 }
                 ?>
             </div>

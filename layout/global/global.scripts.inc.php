@@ -8,7 +8,7 @@ Echo"<link href=\"css/style.css\" rel=\"stylesheet\" type=\"text/css\" />
 <link href=\"css/select2.min.css\" rel=\"stylesheet\" />
 <script src=\"js/select2.min.js\"></script>
 <link href=\"css/custom.css\" rel=\"stylesheet\" type=\"text/css\" />
-<script type=\"text/javascript\" src=\"js/jquery.tablesorter.js\"></script>
+<script src=\"js/jquery.tablesorter.js\"></script>
 
 <script>
 //Reload page on browser back

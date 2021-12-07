@@ -2,7 +2,7 @@
 
 $dashboard = new Dashboard();
 
-Echo"<h2>Dashboard</h2>"; //Must be a separate echo from the one below otherwise header will be below alert box. Side effect of engine's nonlinear processing
+Echo"<h2>Dashboard</h2>"; //Must be a separate echo from the one below otherwise header will be below the alert box. Side effect of engine's nonlinear processing
 Echo"<div class=\"alerts\">
 {$dashboard->displayActiveAlerts()}
 </div>";
@@ -17,7 +17,6 @@ Echo"
     </div>
         <div class=\"boxcontent\">";
         
-        $site = new Site();
         Echo"<pre>";
         var_dump($site);
         Echo"</pre>";
@@ -45,7 +44,6 @@ Echo"
     </div>
         <div class=\"boxcontent\">";
         
-        $site = new Site();
         Echo"<pre>";
         var_dump($_SESSION);
         Echo"</pre>";
@@ -55,10 +53,6 @@ Echo"
 
 // }
 
-    Echo"</p>
-    </div>
-    </div>";
-    
     //$audit = new AuditLog("Update", "Test", "Test");
 
 Echo"</div>";

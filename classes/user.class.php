@@ -223,86 +223,6 @@ class User {
         }
     }
 
-    // public function threeStrikes($email,$reason){
-    //     //User users will become locked if incorrect login is attempted 3x without success
-    //     $CurrentDateTime = date("Y-m-d H:i:s");
-    //     $ipAddress = $_SERVER['REMOTE_ADDR'];
-    //     $interval = 30;
-
-    //     $sql = "INSERT INTO failed_login 
-    //     (email,reason,createdtime,ip,status) VALUES 
-    //     (?,?,?,?,'Active')";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$email, $reason, $CurrentDateTime, $ipAddress]);
-
-    //     //Pull in staffid associated with email
-    //     $sql = "SELECT staffid FROM staff WHERE email = ?";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$email]);
-    //     $staffRow = $stmt->fetch();
-    //     $staffId = $staffRow[0]["staffid"];
-
-    //     //Get count of failed attempts. If more than 3, lock account
-    //     $sql = "SELECT COUNT(seqno) FROM failed_login WHERE email = ? AND status = 'Active' AND createdtime  <= now() - INTERVAL ? MINUTE";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$email, $interval]);
-    //     $strikes = $stmt->fetch();
-
-    //     $staff = new Staff($staffId);
-    //     if($strikes > 3){
-    //         $staff->lockStaff($staffId);
-    //         Echo "Your account has been locked from too many failed attempts";
-    //     }
-    // }
-
-    // public function lockStaff($staffId){
-    //     $CurrentDateTime = date("Y-m-d H:i:s");
-
-    //     //TODO: if ($employee->isValid($loggedInEmployee)){ execute } else { error }
-    //     //Revoke account access
-    //     $sql = "UPDATE users SET status = 'Locked' WHERE staffid = ?";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$staffId]);
-
-    //     $sql = "UPDATE staff SET status = 'Locked' WHERE staffid = ?";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$staffId]);
-    // }
-
-    // public function unlockStaff($staffId){
-    //     $CurrentDateTime = date("Y-m-d H:i:s");
-
-    //     //TODO: if ($employee->isValid($loggedInEmployee)){ execute } else { error }
-    //     //Give back account access
-    //     $sql = "UPDATE users SET status = 'Active' WHERE staffid = ?";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$staffId]);
-
-    //     $sql = "UPDATE staff SET status = 'Active' WHERE staffid = '$staffId'";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$staffId]);
-
-    //     $staff = new Staff($staffId);
-    //     $sql = "UPDATE failed_login SET status = 'Expired' WHERE email = ? AND status = 'Active'";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$staff->email]);
-    // }
-
-    // public function deactivateStaff($staffId,$loggedInEmployee){
-    //     $CurrentDateTime = date("Y-m-d H:i:s");
-
-    //     //TODO: if ($employee->isValid($loggedInEmployee)){ execute } else { error }
-    //     //Remove employee profile
-    //     $sql = "UPDATE staff SET status = 'InActive', lastmodifieddate = ?, lastmodifiedby = ? WHERE staffid = ?";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$CurrentDateTime, $loggedInEmployee, $staffId]);
-
-    //     //Revoke account access
-    //     $sql = "UPDATE users SET status = 'InActive', lastmodifieddate = ?, lastmodifiedby = ? WHERE staffid = ?";
-    //     $stmt = $this->connect->prepare($sql);
-    //     $stmt->execute([$CurrentDateTime, $loggedInEmployee, $staffId]);
-    // }
-
     public function expireAllResets(){
         //When a new password is requested, expire any previously requested hashes that haven't been used
         $sql = "UPDATE password_change_requests SET status = 'Used' WHERE email = ?";
@@ -310,24 +230,11 @@ class User {
         $stmt->execute([$this->emailAddress]);
     }
 
-    // public function isValid($loggedInEmployee){
-    // return true;
-    // }
-
-    // public function checkPagePermission($checkLevel){
-    // //Can be inserted in any page to verify that user has access. If they do not, they cannot access the screen/section
-    //     if($this->userLevel < $checkLevel){
-    //         Echo "Error: Insufficient access rights<br /></br />If problem persists, please contact your system administrator";
-    //         exit;
-    //     }
-
-    // }
-
     public function updatePreferences(){
         //Package all update methods into this carrier method
         //Allows for expansion of preferences options later
         $this->updateTimeZone();
-        //$audit = new AuditLog("Update", "User Preferences", "Updated User Preferences");
+        $audit = new AuditLog("Update", "User Preferences", "Updated User Preferences");
     }
 
     private function updateTimeZone(){
