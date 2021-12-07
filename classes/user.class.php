@@ -139,7 +139,7 @@ class User {
         $site = new Site();
         $to = $this->emailAddress;
         $subject = "{$site->siteName} - Please verify your account";
-        $message = "You have been added as a {$site->siteName} user! Please use the link below to verify your account and set your password. \n \n http://{$site->webAddress}/user/verify/{$this->verificationString}";
+        $message = "You have been added as a {$site->siteName} user! Please use the link below to verify your account and set your password. \n \n {$site->webAddress}/user/verify/{$this->verificationString}";
         $headers = "From: noreply@{$site->domain}" . "\r\n" .
             "Reply-To: noreply@{$site->domain}" . "\r\n" .
             "X-Mailer: PHP/" . phpversion();
@@ -243,6 +243,8 @@ class User {
         $stmt = $this->connect->prepare($sql);
         $stmt->execute([$this->preferences["timeZone"], $this->userId]);
     }
+
+    
 
 }
 

@@ -41,10 +41,6 @@ $stmt = $session->connect->prepare($sql);
 $stmt->execute([$username]);
 $row = $stmt->fetch();
 
-// Echo"<pre>";
-// var_dump($stmt->rowCount());
-// Echo"</pre>";
-
 //Check if account exists
 if($stmt->rowCount() > 0){
 	$password = $row['password'] ?? NULL;
@@ -65,21 +61,16 @@ if($stmt->rowCount() > 0){
 		header("Location: /");
 		exit();
 	} else {
-		Echo"Incorrect password";
 		$audit = new AuditLog("Error", "Login", "Incorrect Password Attempted ({$_POST['password']})");
 		// $session->loggedInUser->threeStrikes($username,"Incorrect Password Attempted");
 		// if(isset($session->loggedInUser->locked)){
 		// 	header("Location: /user/error/locked");
 		// } else {
-		// 	header("Location: /user/error/password");
+		header("Location: /user/error/password");
 		// }
-
-		// Echo"<pre>";
-		// var_dump(get_defined_vars());
-		// Echo"</pre><br><br>";
 	}
 } else {
-	Echo "Incorrect username";
+	header("Location: /user/error/password");
 	$audit = new AuditLog("Error", "Login", "Incorrect Username Attempted ({$username})");
 }
 

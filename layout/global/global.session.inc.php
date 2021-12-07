@@ -5,7 +5,7 @@ session_start();
 $session = Session::getInstance()->getSession();
 
 //Exempt pages from login requirement
-$exempted = ["reset", "verify", "resetsub", "verifysub", "wiki"];
+$exempted = ["reset", "verify", "resetsub", "verifysub", "error"];
 if(!in_array(htmlspecialchars($_GET['action'] ?? ""), $exempted)){
     //Check if session cookie is set
     if (isset($session->sessionId)) {

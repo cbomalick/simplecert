@@ -5,14 +5,6 @@ switch($action){
         
     break;
 
-    case"verify":
-        require_once('user.verify.inc.php');
-    break;
-
-    case"verifysub":
-        require_once('user.verifysub.inc.php');
-    break;
-
     case"reset":
         require_once('user.reset.inc.php');
     break;
@@ -27,6 +19,10 @@ switch($action){
 
     case"prefsub":
         require_once('user.prefsub.inc.php');
+    break;
+
+    case"error":
+        require_once('user.error.inc.php');
     break;
 
 }

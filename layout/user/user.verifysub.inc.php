@@ -21,6 +21,7 @@
             }
     
             $user->updatePassword($emailAddress,$verificationKey,$password);
+            $audit = new AuditLog("Password Change", "Password", "Updated Password");
             Echo "<p style=\"text-align: center;\">Password updated successfully</p>";
             Echo"<p style=\"text-align: center;\"><button type=\"button\" class=\"button\" onclick=\"window.location.href = 'dashboard';\">Continue</button></p>";
         } else {

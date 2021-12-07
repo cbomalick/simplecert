@@ -5,12 +5,6 @@ class AuditLog{
     /** $audit = new AuditLog("audit type", "screen or field", "text to log"); */
     /** $audit = new AuditLog("Update", "User Preferences", "Updated User Preferences"); */
     
-    //Audit Types:
-    ////Create - Used any time new data is inserted
-    ////Update - Used any time new data is modified
-    ////Delete - Used any time new data is deleted
-    ////Error - Used any time an error is logged
-    
     public function __construct($auditType, $field, $log){
         $enabled = TRUE; //Toggle entire audit log system on/off
 
@@ -34,7 +28,7 @@ class AuditLog{
 
     private function saveLog(){
         $sql = "INSERT INTO auditlog 
-        (auditid,type,url,field,log,personid,timestamp,ipaddress) VALUES 
+        (auditid,type,url,field,log,userid,timestamp,ipaddress) VALUES 
         (?, ?, ?, ?,?, ?, ?, ?)";
         
         $stmt = $this->connect->prepare($sql);
