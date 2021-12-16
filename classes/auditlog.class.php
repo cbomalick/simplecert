@@ -6,7 +6,7 @@ class AuditLog{
     /** $audit = new AuditLog("Update", "User Preferences", "Updated User Preferences"); */
     
     public function __construct($auditType, $field, $log){
-        $enabled = TRUE; //Toggle entire audit log system on/off
+        $enabled = FALSE; //Toggle entire audit log system on/off
 
         $this->connect = Database::getInstance()->getConnection();
         $session = Session::getInstance()->getSession();

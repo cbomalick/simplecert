@@ -41,17 +41,17 @@ if (!isset($_POST['customerName'])) {
     $_SESSION['customerLastSearchedCustomerName'] = $customerName;
 }
 
-// //Company
-// if (!isset($_POST['companyId']) || empty($_POST['companyId'])) {
-//     if(isset($_SESSION['lastSearchedCompany'])){
-//         $lastSearchedCompany = $_SESSION['lastSearchedCompany'];
-//     } else {
-//         $lastSearchedCompany = $session->loggedInUser->primaryCompany;
-//     }
-// } else {
-//     $lastSearchedCompany = $_POST['companyId'];
-//     $_SESSION['lastSearchedCompany'] = $lastSearchedCompany;
-// }
+//Company
+if (!isset($_POST['companyId']) || empty($_POST['companyId'])) {
+    if(isset($_SESSION['lastSearchedCompany'])){
+        $lastSearchedCompany = $_SESSION['lastSearchedCompany'];
+    } else {
+        $lastSearchedCompany = $session->loggedInUser->primaryCompany;
+    }
+} else {
+    $lastSearchedCompany = $_POST['companyId'];
+    $_SESSION['lastSearchedCompany'] = $lastSearchedCompany;
+}
 
 //Status
 if (!isset($_POST['status']) || empty($_POST['status'])) {
@@ -116,10 +116,10 @@ Echo"
 </div>
     ";
 
-// //Generate Table or Content
-// $customerList = new CustomerList();
-// $objArray = $customerList->newCustomerList($status, $dateFrom, $dateTo, $lastSearchedCompany, $customerName);
-// $customerList->printCustomerList($objArray);
+//Generate Table or Content
+$customerList = new CustomerList();
+$objArray = $customerList->newCustomerList($status, $dateFrom, $dateTo, $lastSearchedCompany, $customerName);
+$customerList->printCustomerList($objArray);
  
 
 ?>

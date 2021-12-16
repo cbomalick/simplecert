@@ -41,7 +41,7 @@ class Table {
             Echo"
             <tr>
                 <td colspan={$colspan} style=\"font-style: italic; text-align: center;\">
-                    No records
+                    No results found
                 </td>
             </tr>";
         }

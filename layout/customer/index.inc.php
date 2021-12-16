@@ -2,7 +2,7 @@
 
 switch($action){
     default:
-        if(!$session->loggedInUser->validatePermissions("CustomerView")){
+        if(!$session->session->loggedInUser->validatePermissions("CustomerView")){
             Echo"<p>&nbsp;</p>";
             $alert = (new Alert())->permissionError();
             Echo"<p><button type=\"button\" class=\"button\" onclick=\"window.location.href = '/';\">Go Back</button></p> ";
@@ -13,7 +13,7 @@ switch($action){
     break;
 
     // case"add":
-    //     if(!$loggedInUser->validatePermissions("CustomerAdd")){
+    //     if(!$session->loggedInUser->validatePermissions("CustomerAdd")){
     //         Echo"Error: You do not have permission to access this feature.";
     //     break;
     //     } else {
@@ -22,7 +22,7 @@ switch($action){
     // break;
 
     // case"addnew":
-    //     if(!$loggedInUser->validatePermissions("CustomerAdd")){
+    //     if(!$session->loggedInUser->validatePermissions("CustomerAdd")){
     //         Echo"Error: You do not have permission to access this feature.";
     //     break;
     //     } else {
@@ -30,44 +30,44 @@ switch($action){
     //     }
     // break;
     
-    // case"view":
-    //     if(!$loggedInUser->validatePermissions("CustomerView")){
-    //         Echo"Error: You do not have permission to access this feature.";
-    //     break;
-    //     } else {
-    //         require_once('customer.view.inc.php');
-    //     }
-    // break;
+    case"view":
+        if(!$session->loggedInUser->validatePermissions("CustomerView")){
+            Echo"Error: You do not have permission to access this feature.";
+        break;
+        } else {
+            require_once('customer.view.inc.php');
+        }
+    break;
 
-    // case"contacts":
-    //     if(!$loggedInUser->validatePermissions("CustomerView")){
-    //         Echo"Error: You do not have permission to access this feature.";
-    //     break;
-    //     } else {
-    //         require_once('customer.contacts.inc.php');
-    //     }
-    // break;
+    case"contacts":
+        if(!$session->loggedInUser->validatePermissions("CustomerView")){
+            Echo"Error: You do not have permission to access this feature.";
+        break;
+        } else {
+            require_once('customer.contacts.inc.php');
+        }
+    break;
 
-    // case"locations":
-    //     if(!$loggedInUser->validatePermissions("CustomerView")){
-    //         Echo"Error: You do not have permission to access this feature.";
-    //     break;
-    //     } else {
-    //         require_once('customer.locations.inc.php');
-    //     }
-    // break;
+    case"locations":
+        if(!$session->loggedInUser->validatePermissions("CustomerView")){
+            Echo"Error: You do not have permission to access this feature.";
+        break;
+        } else {
+            require_once('customer.locations.inc.php');
+        }
+    break;
 
-    // case"notes":
-    //     if(!$loggedInUser->validatePermissions("CustomerView")){
-    //         Echo"Error: You do not have permission to access this feature.";
-    //     break;
-    //     } else {
-    //         require_once('customer.notes.inc.php');
-    //     }
-    // break;
+    case"notes":
+        if(!$session->loggedInUser->validatePermissions("CustomerView")){
+            Echo"Error: You do not have permission to access this feature.";
+        break;
+        } else {
+            require_once('customer.notes.inc.php');
+        }
+    break;
 
     // case"edit":
-    //     if(!$loggedInUser->validatePermissions("CustomerEdit")){
+    //     if(!$session->loggedInUser->validatePermissions("CustomerEdit")){
     //         Echo"Error: You do not have permission to access this feature.";
     //     break;
     //     } else {
@@ -76,7 +76,7 @@ switch($action){
     // break;
 
     // case"cancel":
-    //     if(!$loggedInUser->validatePermissions("CustomerDelete")){
+    //     if(!$session->loggedInUser->validatePermissions("CustomerDelete")){
     //         Echo"Error: You do not have permission to access this feature.";
     //     break;
     //     } else {
@@ -85,7 +85,7 @@ switch($action){
     // break;
 
     // case"save":
-    //     if(!$loggedInUser->validatePermissions("CustomerEdit")){
+    //     if(!$session->loggedInUser->validatePermissions("CustomerEdit")){
     //         Echo"Error: You do not have permission to access this feature.";
     //     break;
     //     } else {

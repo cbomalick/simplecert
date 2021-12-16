@@ -15,6 +15,11 @@ class User {
             if(!empty($row)){
                 foreach($row as $row){
                     $this->userId = $row["userid"];
+                    $this->personId = $row["personid"];
+                    $this->fullName = (new Person($this->personId))->getFullName();
+                    $this->primaryCompany = $row["primarycompany"];
+                    $this->companyList = $row["companylist"];
+                    $this->allowedCompanies = explode(",", $this->companyList);
                     $this->userRoles = explode(",", $row["roles"]);
                     $this->tokens = $this->fetchTokens();
                     $this->preferences[$row["preference"]] = $row["value"];
@@ -23,6 +28,7 @@ class User {
         }
     }
 
+    //** Check user permissions */
     public function validatePermissions($requiredToken){
         //Check to make sure user has appropriate permissions for task they are performing
         if(in_array($requiredToken, $this->tokens)){
@@ -49,109 +55,7 @@ class User {
         return array_unique($objArray);
     }
 
-    public function addNew(){
-        //Verify email hasn't been used
-        $sql = "SELECT count(username) FROM users WHERE username = ?";
-        $stmt = $this->connect->prepare($sql);
-        $stmt->execute([$this->emailAddress]);
-        $count = $stmt->fetch();
-
-        if($count['count(username)'] > 0){
-            Echo"Error: This email has already been associated with a different account";
-            exit;
-        } 
-        
-        //Create users record (Username(email), password, userid, companylist, roles status, forcereset)
-        $id = new IdNumber();
-        $this->userId = $id->generateId("USR");
-        $collapsedCompanies = '';
-        $collapsedRoles = '';
-        
-        //Collapse array values into comma separated string
-        foreach($this->companyList as $company){
-            $collapsedCompanies .= $company . ",";
-        }
-
-        foreach($this->accessTokens as $role){
-            $collapsedRoles .= $role . ",";
-        }
-
-        $sql = "INSERT INTO users 
-        (username,userid,forcereset,primarycompany,companylist,roles,status,createdby,createddate) VALUES 
-        (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $this->connect->prepare($sql);
-        $stmt->execute([$this->emailAddress, $this->userId, 'Y', $this->primaryCompany, $collapsedCompanies, $collapsedRoles, $this->status, $this->createdBy, $this->createdDate]);
-
-        $sql = "INSERT INTO userpreferences 
-        (userid,preference,value,status,createdby,createddate) VALUES 
-        (?, ?, ?, ?, ?, ?)";
-        $stmt = $this->connect->prepare($sql);
-        $stmt->execute([$this->userId, 'timeZone', 'America/Chicago', 'Active', $this->createdBy, $this->createdDate]);
-
-        //Create employee record (Employeeid, payrollid, hiredate, position, department)
-        $sql = "INSERT INTO employee 
-        (company,employeeid,hiredate,department,position,salary,status,createdby,createddate) VALUES 
-        (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $this->connect->prepare($sql);
-        $stmt->execute([$this->primaryCompany, $this->userId, $this->hireDate, $this->department, $this->position, $this->salary, $this->status, $this->createdBy, $this->createdDate]);
-
-        //Create person record (personid, persontype, contacttype, firstname lastname)
-        $sql = "INSERT INTO person 
-            (company,personid,persontype,firstname,lastname,status,createdby,createddate) VALUES 
-            (?, ?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $this->connect->prepare($sql);
-            $stmt->execute([$this->primaryCompany, $this->userId, 'Employee', $this->firstName, $this->lastName, $this->status, $this->createdBy, $this->createdDate]);
-
-        //Email
-        $sql = "INSERT INTO email 
-        (personid,emailaddress,status,createdby,createddate) VALUES 
-        (?, ?, ?, ?, ?)";
-        
-        $stmt = $this->connect->prepare($sql);
-        $stmt->execute([$this->userId, $this->emailAddress, $this->status, $this->createdBy, $this->createdDate]);
-
-        //Phone
-        $sql = "INSERT INTO phone 
-        (personid,phone,status,createdby,createddate) VALUES 
-        (?, ?, ?, ?, ?)";
-        
-        $stmt = $this->connect->prepare($sql);
-        $stmt->execute([$this->userId, $this->phoneNumber, $this->status, $this->createdBy, $this->createdDate]);
-        
-        //Generate password request
-        $this->verificationString = $id->generatePasswordString();
-        $hashString = md5($this->verificationString);
-        $CurrentDateTime = date("Y-m-d H:i:s");
-        $ipAddress = $_SERVER['REMOTE_ADDR'];
-
-        $sql = "INSERT INTO password_change_requests 
-        (email,time,hashstring,ipaddress) VALUES 
-        (?,?,?,?)";
-        $stmt = $this->connect->prepare($sql);
-        $stmt->execute([$this->emailAddress, $CurrentDateTime, $hashString, $ipAddress]);
-
-        //Send introduction email with link to set password
-        $this->sendIntro();
-    }
-
-    public function sendIntro(){
-        //Send verification email
-        $site = new Site();
-        $to = $this->emailAddress;
-        $subject = "{$site->siteName} - Please verify your account";
-        $message = "You have been added as a {$site->siteName} user! Please use the link below to verify your account and set your password. \n \n {$site->webAddress}/user/verify/{$this->verificationString}";
-        $headers = "From: noreply@{$site->domain}" . "\r\n" .
-            "Reply-To: noreply@{$site->domain}" . "\r\n" .
-            "X-Mailer: PHP/" . phpversion();
-        mail($to, $subject, $message, $headers);
-
-        Echo"<div class=\"requestform\">
-            <h2>Add Staff</h2>
-                <p style=\"text-align: center;\">Account created for {$this->firstName} {$this->lastName}</p>
-        </div>";
-
-    }
-
+    //** Password reset process */
     public function passwordVerify($key){
         $hashString = md5($key);
         $sql = "SELECT COUNT(seqno),email FROM password_change_requests WHERE status != 'Used' AND hashstring = ? AND time >= now() - INTERVAL 1 DAY";
@@ -230,6 +134,7 @@ class User {
         $stmt->execute([$this->emailAddress]);
     }
 
+    //** User Preferences */
     public function updatePreferences(){
         //Package all update methods into this carrier method
         //Allows for expansion of preferences options later
@@ -244,8 +149,64 @@ class User {
         $stmt->execute([$this->preferences["timeZone"], $this->userId]);
     }
 
-    
+    //** Lock user after 3 incorrect passwords */
+    public function threeStrikes($email,$reason){
+        //User accounts will become locked if incorrect login is attempted 3x without success
+        $CurrentDateTime = date("Y-m-d H:i:s");
+        $ipAddress = $_SERVER['REMOTE_ADDR'];
 
+        $sql = "INSERT INTO failed_login 
+        (email,reason,createdtime,ip,status) VALUES 
+        (?,?,?,?,'Active')";
+        $stmt = $this->connect->prepare($sql);
+        $stmt->execute([$email, $reason, $CurrentDateTime, $ipAddress]);
+
+        //Is this really needed since locking now just looks at # of attempts within 30mins?
+        // if($this->isLocked($email)){
+        //     $this->lockUser($email);
+        // }
+    }
+
+    public function isLocked($email){
+        $interval = 30; //30 minute default timespan
+        $strikes = 3; //3 incorrect password attempts within 30mins will result in lockout
+
+        //Get count of failed attempts. If more than 3, lock account
+        $sql = "SELECT COUNT(email) FROM failed_login WHERE email = ? AND status = 'Active' AND createdtime  <= (now() - INTERVAL ? MINUTE)";
+        //SELECT COUNT(email) FROM failed_login WHERE email = 'example@gmail.com' AND status = 'Active' AND createdtime > DATE_SUB(NOW(), INTERVAL 30 MINUTE)
+        //??? WHY IS THIS NOT WORKING
+        $stmt = $this->connect->prepare($sql);
+        $stmt->execute([$email, $interval]);
+        $row = $stmt->fetch();
+
+        if($row['COUNT(email)'] > $strikes){
+            return TRUE;
+        } else {
+            return FALSE;
+        }   
+    }
+
+    private function lockUser($email){
+        $sql = "UPDATE users SET status = 'Locked' WHERE username = ?";
+        $stmt = $this->connect->prepare($sql);
+        $stmt->execute([$email]);
+
+        $audit = new AuditLog("Update", "User Locked", "Locked {$email}");
+    }
+
+    private function unlockUser($email){
+    $sql = "UPDATE users SET status = 'Active' WHERE username = ?";
+    $stmt = $this->connect->prepare($sql);
+    $stmt->execute([$email]);
+
+    $audit = new AuditLog("Update", "User Unlocked", "Unlocked {$email}");
+    }
+
+    public function expireFailures($email){
+        $sql = "UPDATE failed_login SET status = 'Expired' WHERE email = ? AND status = 'Active'";
+        $stmt = $this->connect->prepare($sql);
+        $stmt->execute([$email]);
+    }
 }
 
 ?>

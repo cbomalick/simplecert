@@ -36,7 +36,7 @@ if (!isset($_POST['username'], $_POST['password'])){
 //Match submitted details to database
 $session = Session::getInstance()->getSession();
 $sql = "SELECT users.username,users.userid,user_auth.password FROM users
-JOIN user_auth ON users.username = user_auth.username WHERE users.username = ? AND status = 'Active'";
+JOIN user_auth ON users.username = user_auth.username WHERE users.username = ? AND status != 'Disabled'";
 $stmt = $session->connect->prepare($sql);
 $stmt->execute([$username]);
 $row = $stmt->fetch();
@@ -46,8 +46,11 @@ if($stmt->rowCount() > 0){
 	$password = $row['password'] ?? NULL;
 	$userId = $row['userid'] ?? NULL;
 
-	//If Account exists, verify password
-	if (password_verify($_POST['password'],$password)){
+	//If account exists, verify it is not locked
+	if($session->loggedInUser->isLocked($username)){
+		header("Location: /user/error/locked");
+		exit();
+	} else if(password_verify($_POST['password'],$password)){ //If Account is not locked, verify password
 		//Upon success, set values and forward user to index
 		$session->userId = $userId;
 		$session->establishedTime = $CurrentDateTime;
@@ -56,19 +59,15 @@ if($stmt->rowCount() > 0){
 		$_SESSION['ipAddress'] = $_SERVER['REMOTE_ADDR'];
 		$session->createSession();
 		$audit = new AuditLog("Logged In", "Login", "Logged In");
-		//$session->loggedInUser->expireFailures($username);
-
+		$session->loggedInUser->expireFailures($username);
 		header("Location: /");
-		exit();
-	} else {
+	 } else {
+		//If password is incorrect log the attempt, add a strike, and forward to password error page
 		$audit = new AuditLog("Error", "Login", "Incorrect Password Attempted ({$_POST['password']})");
-		// $session->loggedInUser->threeStrikes($username,"Incorrect Password Attempted");
-		// if(isset($session->loggedInUser->locked)){
-		// 	header("Location: /user/error/locked");
-		// } else {
+		$session->loggedInUser->threeStrikes($username,"Incorrect Password Attempted");
 		header("Location: /user/error/password");
-		// }
-	}
+	 }
+	
 } else {
 	header("Location: /user/error/password");
 	$audit = new AuditLog("Error", "Login", "Incorrect Username Attempted ({$username})");

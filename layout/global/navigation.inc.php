@@ -8,7 +8,7 @@
     <div class="navigation">
         <ul>
             <?php
-            if(!isset($session->loggedInUser)){
+            if(isset($session->loggedInUser->userId)){
                 //Dashboard module
                 //All users have access, used as initial landing page
                 Echo"<li><a href=\"/\">Dashboard</a></li>";
@@ -29,62 +29,36 @@
                             </ul>
                         </li>";
                 }
-
-                //Build Billing module
-                $billingLinks = ''; //Begin with empty menu and append screens the user has permissions for
-                $displayBillingModule = FALSE; //Hide module by default
-                if($session->loggedInUser->validatePermissions("BillingView")){
-                    $billingLinks .= "<li><a href=\"/aging\">Bill Aging</a></li>";
-                    $displayBillingModule = TRUE;
-                }
-                if($session->loggedInUser->validatePermissions("BillingView")){
-                    $billingLinks .= "<li><a href=\"/viewbills\">View Bills</a></li>";
-                    $displayBillingModule = TRUE;
-                }
-                if($session->loggedInUser->validatePermissions("BillingView")){
-                    $billingLinks .= "<li><a href=\"/genbills\">Generate Bills</a></li>";
-                    $displayBillingModule = TRUE;
-                }
-
-                //Print Billing module
-                if($displayBillingModule){
-                    Echo"<li>Billing
-                            <ul>
-                                {$billingLinks}
-                            </ul>
-                        </li>";
-                }
-
             } else {
                 Echo"<li>&nbsp;</li>";
             }
-            
-            
             ?>
         </ul>
     </div>
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <?php  
-            if(isset($_SESSION['userId'])){
-                Echo"<h3>Favorites</h3>";
-                Echo"<a class=\"navbaritem navbarbutton\" href=\"\">Employees</a>";
+    <?php
+    //Sidebar
+        if(isset($session->loggedInUser->userId)){
+            Echo'<div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>';
+                
+                Echo"<p>Welcome<br />
+                {$session->loggedInUser->fullName}</p>";
 
                 Echo"<h3>Account Settings</h3>";
                 Echo"<a class=\"navbaritem navbarbutton\" href=\"user/preferences\">Preferences</a>";
                 Echo"<a class=\"navbaritem navbarbutton\" href=\"logout.php\">Log Out</a>";
-            } else {
-                Echo"<h3>Not Logged In</h3>";
-            }
-        ?>
-    </div>
+               
+            Echo'</div>
 
-    <script>
-    function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    }
-    function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    }
-    </script>
+            <script>
+            function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            }
+            function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            }
+            </script>';
+        }
+    ?>
+    
 </div>
