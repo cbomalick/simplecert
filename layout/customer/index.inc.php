@@ -2,7 +2,7 @@
 
 switch($action){
     default:
-        if(!$session->session->loggedInUser->validatePermissions("CustomerView")){
+        if(!$session->loggedInUser->validatePermissions("CustomerView")){
             Echo"<p>&nbsp;</p>";
             $alert = (new Alert())->permissionError();
             Echo"<p><button type=\"button\" class=\"button\" onclick=\"window.location.href = '/';\">Go Back</button></p> ";
@@ -48,14 +48,14 @@ switch($action){
         }
     break;
 
-    case"locations":
-        if(!$session->loggedInUser->validatePermissions("CustomerView")){
-            Echo"Error: You do not have permission to access this feature.";
-        break;
-        } else {
-            require_once('customer.locations.inc.php');
-        }
-    break;
+    // case"locations":
+    //     if(!$session->loggedInUser->validatePermissions("CustomerView")){
+    //         Echo"Error: You do not have permission to access this feature.";
+    //     break;
+    //     } else {
+    //         require_once('customer.locations.inc.php');
+    //     }
+    // break;
 
     case"notes":
         if(!$session->loggedInUser->validatePermissions("CustomerView")){

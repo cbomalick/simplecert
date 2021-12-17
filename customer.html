@@ -1,0 +1,139 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <title>simpleCert</title>
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/sidenav.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="css/flatpickr.min.css">
+<script src="js/flatpickr"></script>
+<script src="js/jquery-3.4.1.js"></script>
+<link href="css/select2.min.css" rel="stylesheet" />
+<script src="js/select2.min.js"></script>
+<link href="css/custom.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery.tablesorter.js"></script>
+
+<script>
+//Reload page on browser back
+if(performance.navigation.type == 2){
+location.reload(true);
+}
+</script>
+<script>
+//Table sorting
+$(function() {
+$(".sortable").tablesorter({
+});
+});
+</script>	</head>
+	<body>
+        <div class="navigationbar" >
+    <div class="logo">
+        <!-- Display logo -->
+    </div>
+    <div class="user">
+        <img src="images/photo.jpg" onclick="openNav()" alt="simpleCert Logo"/>
+    </div>
+    <div class="navigation">
+        <ul>
+            <li><a href="/">Dashboard</a></li><li>Customer
+                            <ul>
+                                <li><a href="/customer">Customers</a></li>
+                            </ul>
+                        </li>        </ul>
+    </div>
+    <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a><p>Welcome<br />
+                Collin Bomalick</p><h3>Account Settings</h3><a class="navbaritem navbarbutton" href="user/preferences">Preferences</a><a class="navbaritem navbarbutton" href="logout.php">Log Out</a></div>
+
+            <script>
+            function openNav() {
+            document.getElementById("mySidenav").style.width = "250px";
+            }
+            function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            }
+            </script>    
+</div>        <div class="panel">
+            <div class="content">
+                <h2>View Customer</h2><div class="utilities">
+        <div class="listbuttons"><button class="button" onclick="window.location.href = '/customer/edit/CUS-NXZGOTSG6U0G';" >Edit Customer</button>
+            <button class="button" onclick="window.location.href = '/contact/add/CUS-NXZGOTSG6U0G';" disabled title="Insufficient permissions">Add Contact</button>
+            <button class="button" onclick="window.location.href = '/location/add/CUS-NXZGOTSG6U0G';" disabled title="Insufficient permissions">Add Location</button>
+            <button class="button" onclick="window.location.href = '/note/add/CUS-NXZGOTSG6U0G';" disabled title="Insufficient permissions">Add Note</button>
+            <button class="button red" onclick="window.location.href = 'customer/cancel/CUS-NXZGOTSG6U0G'" >Inactivate</button> </div>
+        <div class="tools">
+            <!--<a href="download/pdf/CUS-NXZGOTSG6U0G"><img src="images/print.png" /></a>-->
+        </div>
+    </div><div class="boxwrapper metricbox">
+        <div class="box metricbox">
+            <div class="boxcontent ">
+                <div class="metric nametile">
+                    <h4>Washington</h4>
+                    <p>Account Name</p>
+                </div>
+                <div class="metric">
+                    <h4>George Washington</h4>
+                    <p>Primary Contact</p>
+                </div><div class="metric">
+                    <h4>940-123-4567</h4>
+                    <p>Primary Phone</p>
+                </div><div class="metric">
+                    <h4><a href="mailto:g.wash@whitehouse.gov" class="clickable">g.wash@whitehouse.gov</a></h4>
+                    <p>Primary Email</p>
+                    </div></div>
+        </div>
+    </div>
+<div class="boxwrapper">
+    <div class="customertabs full" style="padding-top: 0px;">
+        <ul>
+            <li><a href="customer/view/CUS-NXZGOTSG6U0G">Overview</a></li>
+            <li class="customertabcurrent"><a href="customer/contacts/CUS-NXZGOTSG6U0G">Contacts</a></li>
+            <li><a href="customer/notes/CUS-NXZGOTSG6U0G">Notes</a></li>
+            </ul>
+    </div>
+</div><div class="boxwrapper"><div class="box smallbox">
+    <h2>George Washington</h2>
+    
+    <div class="boxcontent">
+    <p class="header">Address</p>
+    <p class="text-left">1600 Pennsylvania Ave, <span style="white-space:nowrap">Washington, DC</span> 20500</p><p class="header">Phone Number</p>
+    <p class="text-left">940-123-4567</p><p class="header">Email Address</p>
+    <p class="text-left">g.wash@whitehouse.gov</p>
+    
+    </div><h2></h2>
+    <p><button class="button" onclick="window.location.href = 'contact/edit/PER-NXZGOTSG6U0G';" disabled title="Insufficient permissions">Edit Contact</button></p>
+    <p><button class="button red" onclick="window.location.href = 'contact/delete/PER-NXZGOTSG6U0G';" disabled title="Insufficient permissions">Delete Contact</button></p></div></div>            </div>
+        </div>
+        <div id="footer" class="footer">
+	<p>&copy; Copyright 2021 <a href="https://scrillas.com">Bomalick Web Development</a> | All rights reserved</p>
+</div>
+<script>
+    $('.expand-search').click(function(){
+        $('.adv-search').slideToggle('slow');
+    });
+
+    flatpickr(".datepicker", {
+        altFormat: "m/d/Y",
+        altInput: "true"
+    });
+
+    flatpickr(".datetimepicker", {
+        altFormat: "m/d/Y h:i:S K",
+        altInput: "true",
+        enableTime: "true",
+        enableSeconds: "true"
+    });
+
+    $(document).ready(function() {
+        $('.js-example-basic-single').select2({
+            theme: "trident"
+        }
+        );
+        $('.js-example-basic-multiple').select2({
+            theme: "trident"
+        });
+    });
+    </script>	</body>
+</html>

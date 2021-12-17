@@ -19,6 +19,9 @@ class CustomerList{
         $row = $stmt->fetchAll();
         //Construct with parent and then add extra event stuff on top
 
+        //Check permissions and add to array('View' => 'customer/view/', 'Edit' => 'customer/edit/', 'Cancel' => 'customer/cancel/');
+        //Then print out only the items in the array
+
         if(!empty($row)){
             foreach ($row as $row){
                 //Pull metric details
@@ -54,10 +57,15 @@ class CustomerList{
         "Customer" => "accountName",
         "Primary Contact" => "primaryContactName",
         "Start Date" => "startDate",
+        "Category" => "categoryName",
+        "Bill Cycle" => "billCycleName",
+        "Last Bill" => "lastBillDate",
+        "Last Amount" => "lastBillAmount",
+        "Total Due" => "totalAmountDue",
         "Action" => "action");
 
         //CSS Styling for columns
-        $classes = "action:short-input";
+        $classes = "lastPaidAmount:text-right,lastBillAmount:text-right,totalAmountDue:text-right,action:short-input";
 
         $table = new Table($headers, $inputList, $classes);
     }

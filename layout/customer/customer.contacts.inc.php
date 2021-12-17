@@ -8,8 +8,9 @@ Echo"
         <ul>
             <li><a href=\"customer/view/{$id}\">Overview</a></li>
             <li class=\"customertabcurrent\"><a href=\"customer/contacts/{$id}\">Contacts</a></li>
-            <li><a href=\"customer/locations/{$id}\">Locations</a></li>
             <li><a href=\"customer/notes/{$id}\">Notes</a></li>
+            <li><a href=\"customer/notes/{$id}\">Ledger</a></li>
+            <li><a href=\"customer/notes/{$id}\">Recurring Fees</a></li>
             </ul>
     </div>
 </div>";
@@ -22,9 +23,9 @@ foreach($personList->personList as $person){
     Echo"<div class=\"box smallbox\">
     <h2>{$person->fullName}</h2>
     
-    <div class=\"boxcontent\" style=\"min-height: 275px;\">
+    <div class=\"boxcontent\">
     <p class=\"header\">Address</p>
-    <p class=\"text-left\">{$person->fullAddress}</p>";
+    <p class=\"text-left\">{$person->address->getFullAddress()}</p>";
     
     //Display Phone
     Echo"<p class=\"header\">Phone Number</p>

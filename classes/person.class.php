@@ -21,7 +21,7 @@ class Person {
 
                     $this->emailAddress = (new Email())->getEmail($this->personId);
                     $this->phoneNumber = (new Phone())->getPhone($this->personId);
-                    $this->fullAddress = (new Address($this->personId))->getFullAddress();
+                    $this->address = new Address($this->personId);
                 }
             } else {
                 $this->fullName = "Not Found";

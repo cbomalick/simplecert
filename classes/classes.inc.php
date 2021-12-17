@@ -25,6 +25,8 @@ require_once('person.class.php');
 require_once('personlist.class.php');
 require_once('customer.class.php');
 require_once('customerlist.class.php');
+require_once('note.class.php');
+require_once('notelist.class.php');
 
 /* User */
 require_once('user.class.php');

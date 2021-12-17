@@ -25,12 +25,6 @@ Echo"<div class=\"utilities\">
                 $contactDisabled = "";
             }
 
-            if(!$session->loggedInUser->validatePermissions("LocationAdd")){
-                $locationDisabled = "disabled title=\"Insufficient permissions\"";
-            } else {
-                $locationDisabled = "";
-            }
-
             if(!$session->loggedInUser->validatePermissions("NoteAdd")){
                 $noteDisabled = "disabled title=\"Insufficient permissions\"";
             } else {
@@ -45,7 +39,6 @@ Echo"<div class=\"utilities\">
             
             Echo"<button class=\"button\" onclick=\"window.location.href = '/customer/edit/{$customer->customerId}';\" {$editDisabled}>Edit Customer</button>
             <button class=\"button\" onclick=\"window.location.href = '/contact/add/{$customer->customerId}';\" {$contactDisabled}>Add Contact</button>
-            <button class=\"button\" onclick=\"window.location.href = '/location/add/{$customer->customerId}';\" {$locationDisabled}>Add Location</button>
             <button class=\"button\" onclick=\"window.location.href = '/note/add/{$customer->customerId}';\" {$noteDisabled}>Add Note</button>
             <button class=\"button red\" onclick=\"window.location.href = 'customer/cancel/{$customer->customerId}'\" {$deleteDisabled}>Inactivate</button> ";
     Echo"</div>

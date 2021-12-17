@@ -8,8 +8,9 @@ Echo"
         <ul>
             <li class=\"customertabcurrent\"><a href=\"customer/view/{$id}\">Overview</a></li>
             <li><a href=\"customer/contacts/{$id}\">Contacts</a></li>
-            <li><a href=\"customer/locations/{$id}\">Locations</a></li>
             <li><a href=\"customer/notes/{$id}\">Notes</a></li>
+            <li><a href=\"customer/notes/{$id}\">Ledger</a></li>
+            <li><a href=\"customer/notes/{$id}\">Recurring Fees</a></li>
             </ul>
     </div>
 </div>";

@@ -386,13 +386,15 @@ form {
 .navigationbar ul li:hover ul {
 	display: block;
 	margin-top: 20px;
-	min-width: 200px;
+	min-width: 175px;
 	left: 0;
 	position: absolute;
 }
 .navigationbar ul li:hover ul li {
 	display: block;
 	background-color: #257357;
+	padding: 15px 20px 15px 20px;
+	text-align: left;
 }
 .navigationbar ul li:hover ul li span {
 	float: right;
