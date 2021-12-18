@@ -17,14 +17,9 @@ class CustomerList{
         $params = array_merge($status, [$dateFrom, $dateTo, $companyId, $customerName]);
         $stmt->execute($params);
         $row = $stmt->fetchAll();
-        //Construct with parent and then add extra event stuff on top
-
-        //Check permissions and add to array('View' => 'customer/view/', 'Edit' => 'customer/edit/', 'Cancel' => 'customer/cancel/');
-        //Then print out only the items in the array
 
         if(!empty($row)){
             foreach ($row as $row){
-                //Pull metric details
                 $customer = new Customer($row['customerid']);
 
                 $customer->action = "

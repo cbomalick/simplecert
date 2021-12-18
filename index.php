@@ -58,16 +58,69 @@ $audit = new AuditLog("Page View", "Index", "Loaded Page");
                 default:
                     require_once('layout/dashboard/index.inc.php');
                 break;
+                
+                /*Customer Tab*/
+                case"customer":
+                    require_once('layout/customer/index.inc.php');
+                break;
 
-                /*System*/
+                case"event":
+                    require_once('layout/event/index.inc.php');
+                break;
+
+                case"service":
+                    require_once('layout/service/index.inc.php');
+                break;
+
+                case"contact":
+                    require_once('layout/contact/index.inc.php');
+                break;
+
+                case"location":
+                    require_once('layout/location/index.inc.php');
+                break;
+
+                /*Billing Tab*/
+
+                /* Employee Tab */
+                case"employee":
+                    require_once('layout/employee/index.inc.php');
+                break;
+
+                case"notification":
+                    require_once('layout/notification/index.inc.php');
+                break;
+
+                case"route":
+                    require_once('layout/route/index.inc.php');
+                break;
+
+                /*Accounting Tab*/
+
+                /*Reports Tab*/
+
+                /*System Functions*/
+                case"image":
+                    require_once('layout/image/index.inc.php');
+                break;
+
+                case"note":
+                    require_once('layout/note/index.inc.php');
+                break;
+
+                case"metric":
+                    require_once('layout/metric/index.inc.php');
+                break;
+
+                case"cancel":
+                    require_once('layout/cancel/index.inc.php');
+                break;
+
                 case"user":
                     require_once('layout/user/index.inc.php');
                 break;
 
-                /*Customer*/
-                case"customer":
-                    require_once('layout/customer/index.inc.php');
-                break;
+
 
                 }
                 ?>

@@ -48,14 +48,14 @@ switch($action){
         }
     break;
 
-    // case"locations":
-    //     if(!$session->loggedInUser->validatePermissions("CustomerView")){
-    //         Echo"Error: You do not have permission to access this feature.";
-    //     break;
-    //     } else {
-    //         require_once('customer.locations.inc.php');
-    //     }
-    // break;
+    case"locations":
+        if(!$session->loggedInUser->validatePermissions("CustomerView")){
+            Echo"Error: You do not have permission to access this feature.";
+        break;
+        } else {
+            require_once('customer.locations.inc.php');
+        }
+    break;
 
     case"notes":
         if(!$session->loggedInUser->validatePermissions("CustomerView")){
